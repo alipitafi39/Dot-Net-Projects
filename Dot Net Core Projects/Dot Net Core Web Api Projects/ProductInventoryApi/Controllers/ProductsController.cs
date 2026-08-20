@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using ProductInventoryApi.Dtos;
 using ProductInventoryApi.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ProductInventoryApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [EnableRateLimiting("fixed")]
     public class ProductsController : ControllerBase
     {
         private readonly ProductInventoryDbContext _context;

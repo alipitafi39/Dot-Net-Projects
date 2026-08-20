@@ -4,6 +4,7 @@
     using global::ProductInventoryApi.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.RateLimiting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
     using System.IdentityModel.Tokens.Jwt;
@@ -80,6 +81,7 @@
 
             // POST: api/auth/login
             [HttpPost("login")]
+            [EnableRateLimiting("login")]
             public async Task<IActionResult> Login(
                 LoginRequest request)
             {
