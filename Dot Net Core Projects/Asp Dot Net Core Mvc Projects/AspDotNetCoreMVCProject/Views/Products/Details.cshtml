@@ -1,0 +1,168 @@
+﻿@model AspDotNetCoreMVCProject.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-lg">
+
+                <div class="card-header bg-info text-white p-4">
+
+                    <h4 class="mb-0">
+
+                        <i class="bi bi-eye me-2"></i>
+
+                        Product Details
+
+                    </h4>
+
+                </div>
+
+
+                <div class="card-body p-4">
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Product ID
+                            </small>
+
+                            <h5>
+                                #@Model.ProductId
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Product Name
+                            </small>
+
+                            <h5>
+                                @Model.ProductName
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Category
+                            </small>
+
+                            <h5>
+
+                                <span class="badge bg-primary">
+
+                                    @Model.Category.CategoryName
+
+                                </span>
+
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Price
+                            </small>
+
+                            <h5 class="text-success">
+
+                                Rs. @Model.Price.ToString("N2")
+
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Quantity
+                            </small>
+
+                            <h5>
+                                @Model.Quantity
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted">
+                                Supplier
+                            </small>
+
+                            <h5>
+                                @(Model.SupplierName ?? "N/A")
+                            </h5>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <small class="text-muted">
+                                Created Date
+                            </small>
+
+                            <p>
+
+                                @Model.CreatedDate
+                                    .ToString("dd MMMM yyyy hh:mm tt")
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr />
+
+
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <a asp-action="Index"
+                           class="btn btn-light border">
+
+                            Back
+
+                        </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.ProductId"
+                           class="btn btn-primary">
+
+                            <i class="bi bi-pencil me-1"></i>
+
+                            Edit
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
