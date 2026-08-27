@@ -1,0 +1,5 @@
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWcfService\AccountWcfService\bin\AccountWcfService.dll
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWcfService\AccountWcfService\bin\AccountWcfService.pdb
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWcfService\AccountWcfService\obj\Debug\AccountWcfService.csprojResolveAssemblyReference.cache
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWcfService\AccountWcfService\obj\Debug\AccountWcfService.dll
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWcfService\AccountWcfService\obj\Debug\AccountWcfService.pdb

@@ -1,0 +1,5 @@
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWebService\AccountWebService\bin\AccountWebService.dll
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWebService\AccountWebService\bin\AccountWebService.pdb
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWebService\AccountWebService\obj\Debug\AccountWebService.dll
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWebService\AccountWebService\obj\Debug\AccountWebService.pdb
+c:\users\nbpuser\documents\visual studio 2012\Projects\AccountWebService\AccountWebService\obj\Debug\AccountWebService.csprojResolveAssemblyReference.cache

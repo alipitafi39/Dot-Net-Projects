@@ -1,0 +1,4 @@
+C:\Users\NBPUser\Documents\Visual Studio 2012\Projects\AccountWebService\AccountWebService\bin\AccountWebService.dll
+C:\Users\NBPUser\Documents\Visual Studio 2012\Projects\AccountWebService\AccountWebService\bin\AccountWebService.pdb
+C:\Users\NBPUser\Documents\Visual Studio 2012\Projects\AccountWebService\AccountWebService\obj\Release\AccountWebService.dll
+C:\Users\NBPUser\Documents\Visual Studio 2012\Projects\AccountWebService\AccountWebService\obj\Release\AccountWebService.pdb
