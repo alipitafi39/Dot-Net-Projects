@@ -1,0 +1,80 @@
+Create Folder via Power Shell / Terminal
+
+Step - 1:
+==========
+1- mkdir MicroservicesDemo
+2- cd MicroservicesDemo
+3- dotnet new sln -n MicroservicesDemo
+
+Step - 2 :
+==========
+dotnet new webapi -n ClientService
+dotnet new webapi -n ApiGateway         (YARP Api Gateway)
+dotnet new webapi -n ProductService
+dotnet new webapi -n InventoryService
+
+Step - 3 :
+==========
+dotnet sln add ClientService/ClientService.csproj
+dotnet sln add ApiGateway/ApiGateway.csproj
+dotnet sln add ProductService/ProductService.csproj
+dotnet sln add InventoryService/InventoryService.csproj
+
+Step - 4 : (Any Package you want to add)
+========================================
+dotnet add ClientService/ClientService.csproj package Swashbuckle.AspNetCore
+dotnet add ApiGateway/ApiGateway.csproj package Swashbuckle.AspNetCore
+dotnet add ProductService/ProductService.csproj package Swashbuckle.AspNetCore
+dotnet add InventoryService/InventoryService.csproj package Swashbuckle.AspNetCore
+
+or (specific version)
+
+dotnet add ClientService/ClientService.csproj package Swashbuckle.AspNetCore --version 6.6.2
+dotnet add ApiGateway/ApiGateway.csproj package Swashbuckle.AspNetCore --version 6.6.2
+dotnet add ProductService/ProductService.csproj package Swashbuckle.AspNetCore --version 6.6.2
+dotnet add InventoryService/InventoryService.csproj package Swashbuckle.AspNetCore --version 6.6.2
+
+Install JWT package
+===================
+dotnet add ClientService package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add ApiGateway package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add ProductService package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add InventoryService package Microsoft.AspNetCore.Authentication.JwtBearer
+
+Step - 5: (After adding package restore and build)
+==================================================
+dotnet restore
+dotnet build
+
+Step - 6:
+==================================================
+Create classes like models, controllers and others
+
+Step - 7: (setup appSetting.json)
+==================================================
+Setup app configuration like controller config, swagger config, authentication , authorization, api gateway an others 
+
+Step - 6: (setup launchSetting.json)
+==================================================
+Setup service url in launchSetting.json file for (http, https)
+
+Step - 6: (Run all four micro service in separate terminal or from visual studio)
+=================================================================================
+dotnet run --project ClientService
+dotnet run --project ApiGateway
+dotnet run --project ProductService
+dotnet run --project InventoryService
+
+Step - 7: (Service URL)
+=============================
+Client:
+http://localhost:5001/swagger
+
+Gateway:
+http://localhost:5000/swagger
+
+Product:
+http://localhost:5002/swagger
+
+Inventory:
+http://localhost:5003/swagger

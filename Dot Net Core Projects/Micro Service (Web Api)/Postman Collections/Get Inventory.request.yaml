@@ -1,0 +1,9 @@
+$kind: http-request
+description: ""
+url: http://localhost:5000/api/products
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{supabase_service_role_api_key_0vjf}}"
+order: 3000

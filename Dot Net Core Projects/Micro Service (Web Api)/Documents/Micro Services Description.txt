@@ -1,0 +1,244 @@
+Create micro services using dot net core web api
+1- Client Service     (running port - 5001)
+2- Api Gateway (YARP) (running port - 5000)
+3- Product Service    (running port - 5002)
+4- Inventory Service  (running port - 5003)
+
+Swagger URLs:
+=============
+http://localhost:5001/swagger
+http://localhost:5000/swagger
+http://localhost:5002/swagger
+http://localhost:5003/swagger
+
+URLs:
+=============
+http://localhost:5000/api/products/* or http://localhost:5000/api/inventory/*
+http://localhost:5002/api/products/*
+http://localhost:5003/api/inventory/*
+
+Process Flow Diagram
+=======================
+
+                           ┌──────────────────────────────┐
+                           │           CLIENT              │
+                           │                              │
+                           │  Swagger / Postman / Browser │
+                           └───────────────┬──────────────┘
+                                           │
+                                           │
+                         1. LOGIN          │
+                                           │
+                                           ▼
+                    POST http://localhost:5001/api/auth/login
+                                           │
+                                           │
+                                           ▼
+                ┌──────────────────────────────────────────┐
+                │             CLIENT SERVICE                │
+                │                  :5001                    │
+                │                                          │
+                │  AuthController                          │
+                │                                          │
+                │  Username + Password                     │
+                │          │                               │
+                │          ▼                               │
+                │      Validate User                       │
+                │          │                               │
+                │          ▼                               │
+                │      Generate JWT                        │
+                │                                          │
+                └────────────────┬─────────────────────────┘
+                                 │
+                                 │ 2. JWT Token
+                                 │
+                                 ▼
+                    ┌────────────────────────┐
+                    │       CLIENT           │
+                    │                        │
+                    │ Authorization:         │
+                    │ Bearer eyJhbGci...     │
+                    └────────────┬───────────┘
+                                 │
+                                 │
+                                 │ 3. API Request + JWT
+                                 │
+                                 ▼
+             GET http://localhost:5000/api/products/1
+                                 │
+                                 ▼
+        ╔════════════════════════════════════════════════════╗
+        ║                 YARP API GATEWAY                  ║
+        ║                       :5000                        ║
+        ║                                                    ║
+        ║  ┌──────────────────────────────────────────────┐  ║
+        ║  │              RATE LIMITING                   │  ║
+        ║  │                                              │  ║
+        ║  │  Example: 10 requests / user / minute      │  ║
+        ║  │                                              │  ║
+        ║  │       Limit OK?          Limit exceeded?    │  ║
+        ║  │          │                     │            │  ║
+        ║  │          ▼                     ▼            │  ║
+        ║  │       Continue               429            │  ║
+        ║  └────────────────┬─────────────────────────────┘  ║
+        ║                   │                                ║
+        ║                   ▼                                ║
+        ║  ┌──────────────────────────────────────────────┐  ║
+        ║  │          JWT AUTHENTICATION                  │  ║
+        ║  │                                              │  ║
+        ║  │  Validate:                                   │  ║
+        ║  │   ✓ Signature                                │  ║
+        ║  │   ✓ Issuer                                   │  ║
+        ║  │   ✓ Audience                                 │  ║
+        ║  │   ✓ Expiration                               │  ║
+        ║  └────────────────┬─────────────────────────────┘  ║
+        ║                   │                                ║
+        ║                   ▼                                ║
+        ║  ┌──────────────────────────────────────────────┐  ║
+        ║  │             AUTHORIZATION                   │  ║
+        ║  │                                              │  ║
+        ║  │  RequireAuthenticatedUser()                  │  ║
+        ║  │                                              │  ║
+        ║  │       Authorized?        Not Authorized?    │  ║
+        ║  │           │                    │            │  ║
+        ║  │           ▼                    ▼            │  ║
+        ║  │       Continue              401/403         │  ║
+        ║  └────────────────┬─────────────────────────────┘  ║
+        ║                   │                                ║
+        ╚═══════════════════╪════════════════════════════════╝
+                            │
+                            │ 4. YARP forwards request
+                            │    + Authorization header
+                            ▼
+             GET http://localhost:5002/api/products/1
+                            │
+                            ▼
+              ┌──────────────────────────────┐
+              │       PRODUCT SERVICE        │
+              │             :5002            │
+              │                              │
+              │      ProductsController      │
+              │                              │
+              │       [Authorize]            │
+              │              │               │
+              │              ▼               │
+              │        JWT Validation        │
+              │              │               │
+              │              ▼               │
+              │        Get Product            │
+              │                              │
+              └───────────────┬──────────────┘
+                              │
+                              │ 5. ProductService
+                              │    calls InventoryService
+                              │
+                              │ Authorization: Bearer JWT
+                              ▼
+              GET http://localhost:5003/api/inventory/1
+                              │
+                              ▼
+              ┌──────────────────────────────┐
+              │      INVENTORY SERVICE       │
+              │             :5003            │
+              │                              │
+              │     InventoryController      │
+              │                              │
+              │        [Authorize]            │
+              │              │               │
+              │              ▼               │
+              │        JWT Validation        │
+              │              │               │
+              │              ▼               │
+              │       Get Inventory          │
+              │              │               │
+              │              ▼               │
+              │       Quantity = 100         │
+              │                              │
+              └───────────────┬──────────────┘
+                              │
+                              │ 6. Inventory Response
+                              │
+                              ▼
+              ┌──────────────────────────────┐
+              │       PRODUCT SERVICE        │
+              │                              │
+              │   Product + Inventory        │
+              │        Combined              │
+              └───────────────┬──────────────┘
+                              │
+                              │ 7. Response
+                              ▼
+                    ┌───────────────────┐
+                    │   YARP GATEWAY    │
+                    └─────────┬─────────┘
+                              │
+                              ▼
+                         ┌──────────┐
+                         │  CLIENT  │
+                         └──────────┘
+						 
+
+Authentication Flow
+===================
+	POST /api/auth/login
+			│
+			▼
+	ClientService :5001
+			│
+			│ Generate JWT
+			▼
+	JWT Token
+			│
+			▼
+	Client
+			│
+			│ Authorization: Bearer JWT
+			▼
+	YARP :5000
+			│
+			│ Validate JWT
+			▼
+	ProductService :5002
+			│
+			│ Validate JWT
+			▼
+	InventoryService :5003
+			│
+			│ Validate JWT
+			▼
+	    Response
+
+
+Rate Limiting Flow
+==================
+		Client
+		  │
+		  │ Request + JWT
+		  ▼
+		YARP Gateway
+		  │
+		  ▼
+┌─────────────────────┐
+│ Rate Limiter        │
+│                     │
+│ 10 requests/minute  │
+│ per authenticated   │
+│ user                │
+└──────────┬──────────┘
+           │
+      ┌────┴────┐
+      │         │
+      ▼         ▼
+    ≤ 10       > 10
+      │         │
+      ▼         ▼
+ Continue      429
+      │
+      ▼
+ JWT Authentication
+      │
+      ▼
+ Authorization
+      │
+      ▼
+ ProductService
