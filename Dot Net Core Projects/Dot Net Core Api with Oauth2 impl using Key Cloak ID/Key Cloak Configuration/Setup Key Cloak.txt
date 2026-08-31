@@ -1,0 +1,28 @@
+           Installation on Windows
+           =======================
+
+Step - 1: First Install JDK Version (8/11/17/21/16) --> because java installed needed by key cloak, otherwise we can configure it.
+
+Step - 2: Set Java Home
+          
+		  Window + R  (Write command "sysdm.cpl" and click on OK)
+		  
+		  Go to Advance Tab
+		  
+		  Click on Environment Variables
+		  
+		  Add system variables
+		  
+		  Write variable name (JAVA_HOME)
+		  
+		  Write value path of your installed JDK (C:\Program Files\Java\jdk-26.0.2.1)
+
+          Click on OK.		  
+Step - 3: 
+          Download key cloak
+		  
+          Extract key cloak folder
+          
+		  Open cmd and execute command and press enter button (bin\kc.bat start-dev)
+
+          Now key cloak ready on access URL (//http://localhost:8080/)		  
