@@ -1,0 +1,32 @@
+[
+  {
+    "ContainingType": "KeycloakApi.Controllers.ProductsController",
+    "Method": "GetProducts",
+    "RelativePath": "api/Products",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "KeycloakApi.Controllers.ProductsController",
+    "Method": "Admin",
+    "RelativePath": "api/Products/admin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "KeycloakApi.Controllers.ProductsController",
+    "Method": "Public",
+    "RelativePath": "api/Products/public",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
